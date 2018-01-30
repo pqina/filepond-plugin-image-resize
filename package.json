@@ -1,0 +1,14 @@
+{
+    "name": "filepond-plugin-image-resize",
+    "version": "1.0.0",
+    "description": "Image Resize Plugin for FilePond",
+    "homepage": "https://pqina.nl/filepond",
+    "main": "dist/filepond-plugin-image-resize.js",
+    "browser": "dist/filepond-plugin-image-resize.js",
+    "module": "dist/filepond-plugin-image-resize.esm.js",
+    "license": "MIT",
+    "author": {
+        "name": "PQINA",
+        "url": "https://pqina.nl"
+    }
+}
