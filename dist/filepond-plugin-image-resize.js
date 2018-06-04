@@ -1,5 +1,5 @@
 /*
- * FilePondPluginImageResize 1.0.1
+ * FilePondPluginImageResize 1.1.0
  * Licensed under MIT, https://opensource.org/licenses/MIT
  * Please visit https://pqina.nl/filepond for details.
  */
@@ -51,6 +51,7 @@
         // store crop rectangle with item
         item.setMetadata('resize', {
           mode: mode,
+          upscale: query('GET_IMAGE_RESIZE_UPSCALE'),
           size: {
             width: width,
             height: height
@@ -72,6 +73,9 @@
         // - cover => pick biggest dimension
         // - contain => pick smaller dimension
         imageResizeMode: ['cover', Type.STRING],
+
+        // set to false to disable upscaling of image smaller than the target width / height
+        imageResizeUpscale: [true, Type.BOOLEAN],
 
         // target width
         imageResizeTargetWidth: [null, Type.INT],
