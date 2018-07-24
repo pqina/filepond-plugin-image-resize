@@ -1,5 +1,5 @@
 /*
- * FilePondPluginImageResize 1.1.0
+ * FilePondPluginImageResize 1.2.0
  * Licensed under MIT, https://opensource.org/licenses/MIT
  * Please visit https://pqina.nl/filepond for details.
  */

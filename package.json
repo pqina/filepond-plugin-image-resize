@@ -1,6 +1,6 @@
 {
     "name": "filepond-plugin-image-resize",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "description": "Image Resize Plugin for FilePond",
     "homepage": "https://pqina.nl/filepond",
     "repository": "pqina/filepond-plugin-image-resize",
