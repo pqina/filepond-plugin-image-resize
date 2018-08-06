@@ -1,5 +1,5 @@
 /*
- * FilePondPluginImageResize 2.0.0
+ * FilePondPluginImageResize 2.0.1
  * Licensed under MIT, https://opensource.org/licenses/MIT
  * Please visit https://pqina.nl/filepond for details.
  */
@@ -48,18 +48,34 @@ var plugin$1 = _ => {
           return resolve(item);
         }
 
+        const targetWidth = width === null ? height : width;
+        const targetHeight = height === null ? targetWidth : height;
+
         // if should not upscale, we need to determine the size of the file
         const fileURL = URL.createObjectURL(file);
         getImageSize(fileURL, (imageWidth, imageHeight) => {
           URL.revokeObjectURL(fileURL);
 
+          // get exif orientation
+          const orientation =
+            (item.getMetadata('exif') || {}).orientation || -1;
+
+          // swap width and height if orientation needs correcting
+          if (orientation >= 5 && orientation <= 8) {
+            [imageWidth, imageHeight] = [imageHeight, imageWidth];
+          }
+
           // image is already perfect size, no transformations required
-          if (imageWidth === width && imageHeight === height) {
+          if (imageWidth === targetWidth && imageHeight === targetHeight) {
             return resolve(item);
           }
 
           // image is smaller than target size but no upscaling is allowed
-          if (imageWidth <= width && imageHeight <= height && !upscale) {
+          if (
+            imageWidth <= targetWidth &&
+            imageHeight <= targetHeight &&
+            !upscale
+          ) {
             return resolve(item);
           }
 
@@ -68,8 +84,8 @@ var plugin$1 = _ => {
             mode,
             upscale,
             size: {
-              width,
-              height
+              width: targetWidth,
+              height: targetHeight
             }
           });
 
