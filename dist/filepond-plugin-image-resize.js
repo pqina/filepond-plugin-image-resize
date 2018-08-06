@@ -1,5 +1,5 @@
 /*
- * FilePondPluginImageResize 1.2.0
+ * FilePondPluginImageResize 2.0.0
  * Licensed under MIT, https://opensource.org/licenses/MIT
  * Please visit https://pqina.nl/filepond for details.
  */
@@ -15,6 +15,17 @@
   // test if file is of type image
   var isImage = function isImage(file) {
     return /^image/.test(file.type);
+  };
+
+  var getImageSize = function getImageSize(url, cb) {
+    var image = new Image();
+    image.onload = function() {
+      var width = image.naturalWidth;
+      var height = image.naturalHeight;
+      image = null;
+      cb(width, height);
+    };
+    image.src = url;
   };
 
   /**
@@ -42,23 +53,40 @@
         var mode = query('GET_IMAGE_RESIZE_MODE');
         var width = query('GET_IMAGE_RESIZE_TARGET_WIDTH');
         var height = query('GET_IMAGE_RESIZE_TARGET_HEIGHT');
+        var upscale = query('GET_IMAGE_RESIZE_UPSCALE');
 
         // no resizing to be done
         if (width === null && height === null) {
           return resolve(item);
         }
 
-        // store crop rectangle with item
-        item.setMetadata('resize', {
-          mode: mode,
-          upscale: query('GET_IMAGE_RESIZE_UPSCALE'),
-          size: {
-            width: width,
-            height: height
-          }
-        });
+        // if should not upscale, we need to determine the size of the file
+        var fileURL = URL.createObjectURL(file);
+        getImageSize(fileURL, function(imageWidth, imageHeight) {
+          URL.revokeObjectURL(fileURL);
 
-        return resolve(item);
+          // image is already perfect size, no transformations required
+          if (imageWidth === width && imageHeight === height) {
+            return resolve(item);
+          }
+
+          // image is smaller than target size but no upscaling is allowed
+          if (imageWidth <= width && imageHeight <= height && !upscale) {
+            return resolve(item);
+          }
+
+          // the image needs to be resized
+          item.setMetadata('resize', {
+            mode: mode,
+            upscale: upscale,
+            size: {
+              width: width,
+              height: height
+            }
+          });
+
+          resolve(item);
+        });
       });
     });
 
