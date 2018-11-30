@@ -118,8 +118,10 @@ var plugin$1 = _ => {
   };
 };
 
-if (typeof navigator !== 'undefined' && document) {
-  // plugin has loaded
+const isBrowser =
+  typeof window !== 'undefined' && typeof window.document !== 'undefined';
+
+if (isBrowser && document) {
   document.dispatchEvent(
     new CustomEvent('FilePond:pluginloaded', { detail: plugin$1 })
   );
