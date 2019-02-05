@@ -1,8 +1,10 @@
 /*
- * FilePondPluginImageResize 2.0.1
+ * FilePondPluginImageResize 2.0.2
  * Licensed under MIT, https://opensource.org/licenses/MIT
  * Please visit https://pqina.nl/filepond for details.
  */
+
+/* eslint-disable */
 (function(global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined'
     ? (module.exports = factory())
@@ -134,7 +136,7 @@
   var isBrowser =
     typeof window !== 'undefined' && typeof window.document !== 'undefined';
 
-  if (isBrowser && document) {
+  if (isBrowser) {
     document.dispatchEvent(
       new CustomEvent('FilePond:pluginloaded', { detail: plugin$1 })
     );
