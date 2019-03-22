@@ -1,10 +1,11 @@
-/*
- * FilePondPluginImageResize 2.0.2
- * Licensed under MIT, https://opensource.org/licenses/MIT
- * Please visit https://pqina.nl/filepond for details.
+/*!
+ * FilePondPluginImageResize 2.0.3
+ * Licensed under MIT, https://opensource.org/licenses/MIT/
+ * Please visit https://pqina.nl/filepond/ for details.
  */
 
 /* eslint-disable */
+
 // test if file is of type image
 const isImage = file => /^image/.test(file.type);
 
@@ -22,8 +23,7 @@ const getImageSize = (url, cb) => {
 /**
  * Image Auto Resize Plugin
  */
-var plugin$1 = _ => {
-  const { addFilter, utils } = _;
+const plugin = ({ addFilter, utils }) => {
   const { Type } = utils;
 
   // subscribe to file load and append required transformations
@@ -120,13 +120,13 @@ var plugin$1 = _ => {
   };
 };
 
+// fire pluginloaded event if running in browser, this allows registering the plugin when using async script tags
 const isBrowser =
   typeof window !== 'undefined' && typeof window.document !== 'undefined';
-
 if (isBrowser) {
   document.dispatchEvent(
-    new CustomEvent('FilePond:pluginloaded', { detail: plugin$1 })
+    new CustomEvent('FilePond:pluginloaded', { detail: plugin })
   );
 }
 
-export default plugin$1;
+export default plugin;
