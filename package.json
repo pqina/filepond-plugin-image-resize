@@ -1,6 +1,6 @@
 {
     "name": "filepond-plugin-image-resize",
-    "version": "2.0.3",
+    "version": "2.0.4",
     "description": "Image Resize Plugin for FilePond",
     "license": "MIT",
     "author": {
@@ -12,6 +12,12 @@
     "main": "dist/filepond-plugin-image-resize.js",
     "browser": "dist/filepond-plugin-image-resize.js",
     "module": "dist/filepond-plugin-image-resize.esm.js",
+    "browserslist": [
+        "last 1 version and not Explorer 10",
+        "Explorer 11",
+        "iOS >= 9",
+        "Android >= 4.4"
+    ],
     "files": [
         "dist"
     ],
