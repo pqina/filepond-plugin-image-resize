@@ -4,7 +4,8 @@ export const getImageSize = (url, cb) => {
         const width = image.naturalWidth;
         const height = image.naturalHeight;
         image = null;
-        cb(width, height);
+        cb({ width, height });
     };
+    image.onerror = () => cb(null);
     image.src = url;
 };

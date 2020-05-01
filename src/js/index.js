@@ -36,9 +36,14 @@ const plugin = ({ addFilter, utils }) => {
 
                 // if should not upscale, we need to determine the size of the file
                 const fileURL = URL.createObjectURL(file);
-                getImageSize(fileURL, (imageWidth, imageHeight) => {
+                getImageSize(fileURL, (size) => {
                     URL.revokeObjectURL(fileURL);
-                    
+
+                    // something went wrong
+                    if (!size) return resolve(item);
+
+                    const { width: imageWidth, height: imageHeight } = size;
+
                     // get exif orientation
                     const orientation = (item.getMetadata('exif') || {}).orientation || -1;
                     
