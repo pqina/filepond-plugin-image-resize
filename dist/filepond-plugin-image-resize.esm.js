@@ -1,5 +1,5 @@
 /*!
- * FilePondPluginImageResize 2.0.5
+ * FilePondPluginImageResize 2.0.6
  * Licensed under MIT, https://opensource.org/licenses/MIT/
  * Please visit https://pqina.nl/filepond/ for details.
  */
@@ -62,7 +62,7 @@ const plugin = ({ addFilter, utils }) => {
           // something went wrong
           if (!size) return resolve(item);
 
-          const { width: imageWidth, height: imageHeight } = size;
+          let { width: imageWidth, height: imageHeight } = size;
 
           // get exif orientation
           const orientation =

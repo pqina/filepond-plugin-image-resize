@@ -42,7 +42,7 @@ const plugin = ({ addFilter, utils }) => {
                     // something went wrong
                     if (!size) return resolve(item);
 
-                    const { width: imageWidth, height: imageHeight } = size;
+                    let { width: imageWidth, height: imageHeight } = size;
 
                     // get exif orientation
                     const orientation = (item.getMetadata('exif') || {}).orientation || -1;
