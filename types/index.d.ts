@@ -1,6 +1,8 @@
-declare module "filepond-plugin-image-resize" {
-    const FilePondPluginImageResize: FilePondPluginImageResizeProps;
-    export interface FilePondPluginImageResizeProps {
+// @ts-ignore
+import { FilePondOptions } from 'filepond';
+
+declare module 'filepond' {
+    export interface FilePondOptions {
         /** Enable or disable image resizing */
         allowImageResize?: boolean;
 
@@ -14,10 +16,9 @@ declare module "filepond-plugin-image-resize" {
          * Force will ignore the image aspect ratio. Cover will respect the aspect ratio and will scale to fill the target dimensions.
          * Contain also respects the aspect ratio and will fit the image inside the set dimensions.
          * All three settings will upscale images when there are smaller then the given target dimensions. */
-        imageResizeMode?: 'force'|'cover'|'contain';
+        imageResizeMode?: 'force' | 'cover' | 'contain';
 
         /** Set to false to prevent upscaling of images smaller than the target size. */
         imageResizeUpscale?: boolean;
     }
-    export default FilePondPluginImageResize;
 }
