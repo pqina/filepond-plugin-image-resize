@@ -55,7 +55,7 @@ const plugin = ({ addFilter, utils }) => {
                         return resolve(item);
 
                     // image is smaller than target size but no upscaling is allowed
-                    if (imageWidth <= targetWidth && imageHeight <= targetHeight && !upscale)
+                    if ((imageWidth <= targetWidth || imageHeight <= targetHeight) && !upscale)
                         return resolve(item);
 
                     // the image needs to be resized
