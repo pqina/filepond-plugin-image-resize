@@ -27,16 +27,14 @@ const plugin = ({ addFilter, utils }) => {
                 const upscale = query('GET_IMAGE_RESIZE_UPSCALE');
 
                 // no resizing to be done
-                if (width === null && height === null) {
-                    return resolve(item);
-                }
+                if (width === null && height === null) return resolve(item);
 
                 const targetWidth = width === null ? height : width;
                 const targetHeight = height === null ? targetWidth : height;
 
                 // if should not upscale, we need to determine the size of the file
                 const fileURL = URL.createObjectURL(file);
-                getImageSize(fileURL, (size) => {
+                getImageSize(fileURL, size => {
                     URL.revokeObjectURL(fileURL);
 
                     // something went wrong
@@ -46,21 +44,19 @@ const plugin = ({ addFilter, utils }) => {
 
                     // get exif orientation
                     const orientation = (item.getMetadata('exif') || {}).orientation || -1;
-                    
+
                     // swap width and height if orientation needs correcting
                     if (orientation >= 5 && orientation <= 8) {
                         [imageWidth, imageHeight] = [imageHeight, imageWidth];
                     }
 
                     // image is already perfect size, no transformations required
-                    if (imageWidth === targetWidth && imageHeight === targetHeight) {
+                    if (imageWidth === targetWidth && imageHeight === targetHeight)
                         return resolve(item);
-                    }
 
                     // image is smaller than target size but no upscaling is allowed
-                    if ((imageWidth <= targetWidth && imageHeight <= targetHeight) && !upscale) {
+                    if (imageWidth <= targetWidth && imageHeight <= targetHeight && !upscale)
                         return resolve(item);
-                    }
 
                     // the image needs to be resized
                     item.setMetadata('resize', {
@@ -68,13 +64,12 @@ const plugin = ({ addFilter, utils }) => {
                         upscale,
                         size: {
                             width: targetWidth,
-                            height: targetHeight
-                        }
+                            height: targetHeight,
+                        },
                     });
 
                     resolve(item);
                 });
-
             })
     );
 
@@ -97,8 +92,8 @@ const plugin = ({ addFilter, utils }) => {
             imageResizeTargetWidth: [null, Type.INT],
 
             // target height
-            imageResizeTargetHeight: [null, Type.INT]
-        }
+            imageResizeTargetHeight: [null, Type.INT],
+        },
     };
 };
 

@@ -47,9 +47,7 @@ const plugin = ({ addFilter, utils }) => {
                 const upscale = query('GET_IMAGE_RESIZE_UPSCALE');
 
                 // no resizing to be done
-                if (width === null && height === null) {
-                    return resolve(item);
-                }
+                if (width === null && height === null) return resolve(item);
 
                 const targetWidth = width === null ? height : width;
                 const targetHeight = height === null ? targetWidth : height;
@@ -73,14 +71,12 @@ const plugin = ({ addFilter, utils }) => {
                     }
 
                     // image is already perfect size, no transformations required
-                    if (imageWidth === targetWidth && imageHeight === targetHeight) {
+                    if (imageWidth === targetWidth && imageHeight === targetHeight)
                         return resolve(item);
-                    }
 
                     // image is smaller than target size but no upscaling is allowed
-                    if (imageWidth <= targetWidth && imageHeight <= targetHeight && !upscale) {
+                    if (imageWidth <= targetWidth && imageHeight <= targetHeight && !upscale)
                         return resolve(item);
-                    }
 
                     // the image needs to be resized
                     item.setMetadata('resize', {
