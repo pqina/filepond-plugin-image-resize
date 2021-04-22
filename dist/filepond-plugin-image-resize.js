@@ -1,5 +1,5 @@
 /*!
- * FilePondPluginImageResize 2.0.9
+ * FilePondPluginImageResize 2.0.10
  * Licensed under MIT, https://opensource.org/licenses/MIT/
  * Please visit https://pqina.nl/filepond/ for details.
  */
@@ -90,9 +90,21 @@
                     if (imageWidth === targetWidth && imageHeight === targetHeight)
                         return resolve(item);
 
-                    // image is smaller than target size but no upscaling is allowed
-                    if ((imageWidth <= targetWidth || imageHeight <= targetHeight) && !upscale)
-                        return resolve(item);
+                    // already contained?
+                    // can't upscale image, so if already at correct scale, exit
+                    if (!upscale) {
+                        // covering target size
+                        if (mode === 'cover') {
+                            // if one of edges is smaller than target size, exit
+                            if (imageWidth <= targetWidth || imageHeight <= targetHeight)
+                                return resolve(item);
+                        }
+
+                        // not covering target size, if image is contained in target size, exit
+                        else if (imageWidth <= targetWidth && imageHeight <= targetWidth) {
+                            return resolve(item);
+                        }
+                    }
 
                     // the image needs to be resized
                     item.setMetadata('resize', {
